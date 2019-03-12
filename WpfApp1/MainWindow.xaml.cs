@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace WpfApp1
@@ -12,12 +13,9 @@ namespace WpfApp1
         {
             InitializeComponent();
 
-            //This one throw error.
-            //An unhandled exception of type 'System.Threading.Tasks.TaskCanceledException' occurred in mscorlib.dll Additional information: A task was canceled.
-            var client = new Client();
+            var client = new Client(); //there is code from last issue, simple connection but now it's unsecure
+            //this WriteLine method will never be reached and still have to use below solution 
 
-
-            //This one works without any problem for me
             /*Task.Factory.StartNew(() =>
             {
                 var client = new Client();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ClassLibrary1;
 using Network;
 
 namespace WpfApp1
@@ -19,7 +20,16 @@ namespace WpfApp1
             connectionContainer = ConnectionFactory.CreateSecureTcpConnection("127.0.0.1", 5666, out result);
             if (result == ConnectionResult.Connected)
             {
+                connectionContainer.RegisterPacketHandler<TmpResponse>(Handler, this);
+                var request = new TmpRequest() {Result = Result.Error};
+                Console.WriteLine($"Sending request with value {request.Result}");
+                connectionContainer.Send(request, this);
             }
+        }
+
+        private void Handler(TmpResponse packet, Connection connection)
+        {
+            Console.WriteLine($"Handler: {packet.Result}");
         }
     }
 }
