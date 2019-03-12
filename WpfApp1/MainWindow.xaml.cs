@@ -13,13 +13,7 @@ namespace WpfApp1
         {
             InitializeComponent();
 
-            var client = new Client(); //there is code from last issue, simple connection but now it's unsecure
-            //this WriteLine method will never be reached and still have to use below solution 
-
-            /*Task.Factory.StartNew(() =>
-            {
-                var client = new Client();
-            });*/
+            var client = new Client();
         }
     }
 }
