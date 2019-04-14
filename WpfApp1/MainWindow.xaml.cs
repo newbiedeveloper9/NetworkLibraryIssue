@@ -12,8 +12,7 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-
-            var client = new Client();
+                var client = new Client();
         }
     }
 }

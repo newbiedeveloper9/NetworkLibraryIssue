@@ -17,9 +17,12 @@ namespace WpfApp1
         {
             Thread.Sleep(1500);//wait for server
             ConnectionResult result = ConnectionResult.TCPConnectionNotAlive;
-            connectionContainer = ConnectionFactory.CreateSecureTcpConnection("127.0.0.1", 5666, out result);
+            connectionContainer = ConnectionFactory.CreateSecureTcpConnection("127.0.0.1", 5666, out result, 2048);
             if (result == ConnectionResult.Connected)
             {
+                connectionContainer.EnableLogging = true;
+                connectionContainer.LogIntoStream(Console.OpenStandardError());
+
                 connectionContainer.RegisterPacketHandler<TmpResponse>(Handler, this);
                 var request = new TmpRequest() {Result = Result.Error};
                 Console.WriteLine($"Sending request with value {request.Result}");

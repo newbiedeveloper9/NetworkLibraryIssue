@@ -12,10 +12,12 @@ namespace ClassLibrary1
     [PacketRequest(typeof(TmpRequest))]
     public class TmpResponse : ResponsePacket
     {
-        public TmpResponse(TmpRequest request) : base(request)
+        public TmpResponse(TmpRequest request, List<string> test) : base(request)
         {
+            Test = test;
         }
 
         public Result Result { get; set; }
+        public List<string> Test { get; set; }
     }
 }

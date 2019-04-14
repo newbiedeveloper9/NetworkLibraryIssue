@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,9 @@ namespace ConsoleApp1
 
         private void ConnectionEstablished(Connection connection, ConnectionType connectionType)
         {
+            connection.EnableLogging = true;
+            connection.LogIntoStream(Console.OpenStandardError());
+
             Console.WriteLine(
                 $"{_connectionContainer.Count} {connection.GetType()} connected on port {connection.IPRemoteEndPoint.Port}");
             connection.RegisterStaticPacketHandler<TmpRequest>(Handler);
@@ -35,7 +39,13 @@ namespace ConsoleApp1
         {
             Console.WriteLine($"Request from client: { packet.Result}");
             Console.WriteLine("Sending response");
-            connection.Send(new TmpResponse(packet) { Result = packet.Result});
+            var test = new List<string>();
+            for (int i = 0; i < 157; i++)//156 will work, in my opinion library have problem with parting packet when using SecureConnection
+            {
+                test.Add(i.ToString() + "1");
+            }
+
+            connection.Send(new TmpResponse(packet, test) { Result = packet.Result});
         }
     }
 }
